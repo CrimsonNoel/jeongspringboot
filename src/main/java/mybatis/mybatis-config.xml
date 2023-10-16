@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="model.Member" alias="member" />
+		<typeAlias type="model.Board" alias="board" />
+		<typeAlias type="model.Comment" alias="comment" />
+		
+
+	</typeAliases>
+	
+	
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.OracleDriver" />
+				<property name="url"
+					value="jdbc:oracle:thin:@localhost:1521:xe" />
+				<property name="username" value="kic" />
+				<property name="password" value="1111" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper class="mybatis.MemberAnno" />
+		<mapper  resource="mybatis/Board.xml"   />
+	</mappers>
+
+</configuration>

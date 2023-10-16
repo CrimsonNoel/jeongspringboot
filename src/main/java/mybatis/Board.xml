@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.board">
+
+	<insert id="insertBoard" parameterType="board">
+		insert into board values
+		(boardseq.nextval,#{boardid},#{name},#{pass},#{subject},#{content},#{file1},sysdate,0,boardseq.currval,0,0)
+	</insert>
+
+
+	<insert id="insertComment" parameterType="map">
+		insert into
+		boardcomment values
+		(boardcomseq.nextval,#{num},#{comment},sysdate)
+	</insert>
+
+	<select id="boardCount" parameterType="string" resultType="int">
+		select nvl(count(*),0) from board where boardid = #{boardid}
+	</select>
+
+	<select id="boardList" parameterType="map" resultType="board">
+		select *
+		from (
+		select rownum rnum , a.* from
+		(select * from board where boardid
+		= #{boardid}
+		order by num desc) a) where rnum BETWEEN #{start} and
+		#{end}
+	</select>
+
+	<select id="commentList" parameterType="int" resultType="comment">
+		select * from boardcomment where num = #{num} order by regdate desc
+	</select>
+
+     <select id="boardOne" parameterType="int"  resultType="board">
+     select * from board where num = #{num}
+     </select>
+
+	<update id="boardUpdate"  parameterType="board" >
+	update board set subject = #{subject}, content = #{content}, 
+	file1 = #{file1} where num = #{num}
+	</update>
+
+	<delete id="boardDelete"  parameterType="int">
+	delete from board where num = #{num}
+	</delete>
+	
+	<delete id="commentDelete"  parameterType="int">
+	delete from boardcomment  where num = #{num}	
+	</delete>
+
+
+
+
+
+</mapper>
